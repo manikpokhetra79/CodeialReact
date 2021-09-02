@@ -10,7 +10,7 @@ export function updatePosts(posts) {
 export function fetchPosts() {
   return (dispatch) => {
     const url = APIUrls.fetchPosts();
-    console.log(url);
+    // console.log(url);
     fetch(url)
       .then((res) => res.json())
       .then((data) => {
