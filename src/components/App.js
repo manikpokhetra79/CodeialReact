@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+
 import { fetchPosts } from '../actions/posts';
+import { Home, Navbar } from './';
+
 class App extends Component {
   componentDidMount() {
     const { posts } = this.props;
@@ -8,7 +12,23 @@ class App extends Component {
   }
 
   render() {
-    return <div className="App"></div>;
+    const { posts } = this.props;
+    return (
+      <Router>
+        <div>
+          <Navbar />
+          <Switch>
+            <Route
+              exact
+              path="/"
+              render={(props) => {
+                return <Home {...props} posts={posts} />;
+              }}
+            />
+          </Switch>
+        </div>
+      </Router>
+    );
   }
 }
 function mapStateToProps(state) {
