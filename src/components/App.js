@@ -10,7 +10,15 @@ import PropTypes from 'prop-types';
 import jwtDecode from 'jwt-decode';
 
 import { fetchPosts } from '../actions/posts';
-import { Home, Navbar, Page404, Login, Signup, Settings } from './';
+import {
+  Home,
+  Navbar,
+  Page404,
+  Login,
+  Signup,
+  Settings,
+  UserProfile,
+} from './';
 import { authenticateUser } from '../actions/auth';
 import { getAuthTokenFromLocalStorage } from '../helpers/utils';
 // function to redirect to specific routes if  user not Logged in
@@ -75,6 +83,11 @@ class App extends React.Component {
             <PrivateRoute
               path="/settings"
               component={Settings}
+              isLoggedin={auth.isLoggedin}
+            />
+            <PrivateRoute
+              path="/user/:userId" //use variable in url
+              component={UserProfile}
               isLoggedin={auth.isLoggedin}
             />
             <Route component={Page404} />
