@@ -49,7 +49,7 @@ export default function auth(state = initialAuthState, action) {
     case LOG_OUT:
       return {
         ...state,
-        user: {},
+        user: {}, // remove token from local storage
         isLoggedin: false,
       };
     default:

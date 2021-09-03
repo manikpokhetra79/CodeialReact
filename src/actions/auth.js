@@ -54,7 +54,7 @@ export function login(email, password) {
       });
   };
 }
-
+// persisting user
 export function authenticateUser(user) {
   return {
     type: AUTHENTICATE_USER,
