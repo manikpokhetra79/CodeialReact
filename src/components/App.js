@@ -12,7 +12,7 @@ import jwtDecode from 'jwt-decode';
 import { fetchPosts } from '../actions/posts';
 import { Home, Navbar, Page404, Login, Signup, Settings } from './';
 import { authenticateUser } from '../actions/auth';
-
+import { getAuthTokenFromLocalStorage } from '../helpers/utils';
 // function to redirect to specific routes if  user not Logged in
 const PrivateRoute = (privateRouteProps) => {
   const { isLoggedin, path, component: Component } = privateRouteProps;
@@ -39,7 +39,7 @@ const PrivateRoute = (privateRouteProps) => {
 class App extends React.Component {
   componentDidMount() {
     this.props.dispatch(fetchPosts());
-    const token = localStorage.getItem('token');
+    const token = getAuthTokenFromLocalStorage();
     if (token) {
       const user = jwtDecode(token);
 

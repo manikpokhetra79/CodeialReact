@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { editUser, clearAuthState } from '../actions/auth';
 class Settings extends Component {
+  componentWillUnmount() {
+    this.props.dispatch(clearAuthState());
+  }
+
   constructor(props) {
     super(props);
 
@@ -16,9 +21,14 @@ class Settings extends Component {
       [fieldName]: val,
     });
   };
+  handleSave = () => {
+    const { password, confirmPassword, name } = this.state;
+    const { user } = this.props.auth;
+    this.props.dispatch(editUser(name, password, confirmPassword, user._id));
+  };
   render() {
     const { editMode } = this.state;
-    const { user } = this.props.auth;
+    const { user, error } = this.props.auth;
     return (
       <div className="settings">
         <div className="img-container">
@@ -27,6 +37,12 @@ class Settings extends Component {
             alt="user-dp"
           />
         </div>
+        {error && <div className="alert error-dailog">{error}</div>}
+        {error === false && (
+          <div className="alert success-dailog">
+            Successfully updated Profile
+          </div>
+        )}
         <div className="field">
           <div className="field-label">Email</div>
           <div className="field-value">{user.email}</div>
@@ -47,7 +63,7 @@ class Settings extends Component {
         </div>
         {editMode && (
           <div className="field">
-            <div classname="field-label">New password</div>
+            <div className="field-label">New password</div>
 
             <input
               type="password"
@@ -73,7 +89,9 @@ class Settings extends Component {
 
         <div className="btn-grp">
           {editMode ? (
-            <button className="button save-btn">Save</button>
+            <button className="button save-btn" onClick={this.handleSave}>
+              Save
+            </button>
           ) : (
             <button
               className="button edit-btn"
